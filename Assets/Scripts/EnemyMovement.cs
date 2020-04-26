@@ -9,12 +9,13 @@ public class EnemyMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        StartCoroutine(FollowPath());
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+    
+    IEnumerator FollowPath() {
+        foreach(Waypoint w in path) {
+            transform.position = w.transform.position;
+            yield return new WaitForSeconds(1f);
+        }
     }
 }
