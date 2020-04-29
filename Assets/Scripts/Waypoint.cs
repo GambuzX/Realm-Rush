@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class Waypoint : MonoBehaviour
 {
+    public bool isExplored;
+    public Waypoint exploredFrom;
     const int gridSize = 10;
     // Start is called before the first frame update
     void Start()
     {
-        
+        Reset();
     }
 
     // Update is called once per frame
@@ -31,5 +33,10 @@ public class Waypoint : MonoBehaviour
     public void SetTopColor(Color color) {
         MeshRenderer topMeshRenderer = transform.Find("Top").GetComponent<MeshRenderer>();
         topMeshRenderer.material.color = color;
+    }
+
+    public void Reset() {
+        this.isExplored = false;
+        this.exploredFrom = null;
     }
 }
