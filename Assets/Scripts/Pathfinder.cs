@@ -21,6 +21,7 @@ public class Pathfinder : MonoBehaviour
     [SerializeField] Waypoint startWaypoint, endWaypoint;
 
     private bool Pathfind() {
+        path = new List<Waypoint>();
         ResetWaypoints();
 
         queue.Enqueue(startWaypoint);
@@ -51,12 +52,15 @@ public class Pathfinder : MonoBehaviour
         Waypoint curr = endWaypoint;
         while(curr != null) {
             path.Add(curr);
+            curr.isPlaceable = false;
             curr = curr.exploredFrom;
         }
         path.Reverse();
     }
 
     public List<Waypoint> GetPath() {
+        if(path.Count > 0) return path; // already calculated
+
         LoadBlocks();
         ColorStartAndEnd();
 

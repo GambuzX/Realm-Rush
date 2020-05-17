@@ -6,6 +6,9 @@ public class Waypoint : MonoBehaviour
 {
     public bool isExplored;
     public Waypoint exploredFrom;
+
+    public bool isPlaceable = true;
+
     const int gridSize = 10;
     // Start is called before the first frame update
     void Start()
@@ -38,5 +41,11 @@ public class Waypoint : MonoBehaviour
     public void Reset() {
         this.isExplored = false;
         this.exploredFrom = null;
+    }
+
+    private void OnMouseOver() {
+        if(Input.GetMouseButtonDown(0) && this.isPlaceable) { //left click
+            print(transform.name + " clicked");
+        }
     }
 }

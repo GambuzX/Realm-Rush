@@ -6,9 +6,9 @@ public class Tower : MonoBehaviour
 {
 
     [SerializeField] Transform objectToPan;
-    [SerializeField] Transform targetEnemy;
     [SerializeField] float attackRange = 10f;
     private ParticleSystem projectileParticle;
+    private Transform targetEnemy;
 
     // Start is called before the first frame update
     void Start()
@@ -16,9 +16,29 @@ public class Tower : MonoBehaviour
         projectileParticle = GetComponentInChildren<ParticleSystem>();
     }
 
+    private void SetTargetEnemy() {
+        EnemyMovement[] enemies = GameObject.FindObjectsOfType<EnemyMovement>();
+        if(enemies.Length == 0) {
+            targetEnemy = null;
+            return;
+        }
+
+        EnemyMovement currentTarget = enemies[0];
+        float minDist = Vector3.Distance(currentTarget.transform.position, transform.position);
+        for(int i = 1; i < enemies.Length; i++) {
+            float newDist = Vector3.Distance(enemies[i].transform.position, transform.position);
+            if (newDist <= minDist) { // accept equal because later enemies are farther in path
+                minDist = newDist;
+                currentTarget = enemies[i];
+            }
+        }
+        targetEnemy = currentTarget.transform;
+    }
+
     // Update is called once per frame
     void Update()
     {
+        SetTargetEnemy();
         if (targetEnemy) {
             objectToPan.LookAt(targetEnemy, Vector3.up);
             FireAtEnemy();
