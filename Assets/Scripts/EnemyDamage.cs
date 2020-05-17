@@ -5,23 +5,30 @@ using UnityEngine;
 public class EnemyDamage : MonoBehaviour
 {
     [SerializeField] int health = 10;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    [SerializeField] ParticleSystem hitParticlePrefab;
+    [SerializeField] ParticleSystem deathParticlePrefab;
+    [SerializeField] AudioClip hitSFX;
+    [SerializeField] AudioClip deathSFX;
 
     void ProcessHit() {
         health--;
-        if (health <= 0)
-            Destroy(gameObject);
+        hitParticlePrefab.Play();
+        if (health <= 0) {
+            Die();
+        }
+        else {
+            GetComponent<AudioSource>().PlayOneShot(hitSFX);
+        }
+    }
+
+    private void Die() {
+        ParticleSystem vfx = Instantiate(deathParticlePrefab, transform.position, Quaternion.identity);
+        vfx.Play();
+        Destroy(vfx, vfx.main.duration);
+
+        AudioSource.PlayClipAtPoint(deathSFX, Camera.main.transform.position);
+
+        Destroy(gameObject);
     }
 
     private void OnParticleCollision(GameObject other) {

@@ -10,6 +10,8 @@ public class Tower : MonoBehaviour
     private ParticleSystem projectileParticle;
     private Transform targetEnemy;
 
+    public Waypoint baseWaypoint;
+
     // Start is called before the first frame update
     void Start()
     {

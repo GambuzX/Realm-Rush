@@ -4,22 +4,21 @@ using UnityEngine;
 
 public class Waypoint : MonoBehaviour
 {
+    [SerializeField] Tower towerPrefab;
+
     public bool isExplored;
     public Waypoint exploredFrom;
 
     public bool isPlaceable = true;
 
+    private TowerFactory towerFactory;
+
     const int gridSize = 10;
     // Start is called before the first frame update
     void Start()
     {
+        towerFactory = GameObject.FindObjectOfType<TowerFactory>();
         Reset();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public int getGridSize() {
@@ -46,6 +45,7 @@ public class Waypoint : MonoBehaviour
     private void OnMouseOver() {
         if(Input.GetMouseButtonDown(0) && this.isPlaceable) { //left click
             print(transform.name + " clicked");
+            towerFactory.AddTower(this);
         }
     }
 }

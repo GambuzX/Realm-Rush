@@ -51,6 +51,7 @@ public class Pathfinder : MonoBehaviour
     private void BuildPath() {
         Waypoint curr = endWaypoint;
         while(curr != null) {
+            curr.transform.Find("Quad").gameObject.SetActive(true);
             path.Add(curr);
             curr.isPlaceable = false;
             curr = curr.exploredFrom;
