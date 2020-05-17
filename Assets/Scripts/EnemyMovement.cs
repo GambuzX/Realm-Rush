@@ -16,7 +16,7 @@ public class EnemyMovement : MonoBehaviour
     IEnumerator FollowPath(List<Waypoint> path) {
         foreach(Waypoint w in path) {
             transform.position = w.transform.position;
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(2f);
         }
     }
 }
